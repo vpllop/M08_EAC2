@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">EAC2_1819S1</string>
+    <string name="app_inserir">Insertar Llibre</string>
+
+    <string-array name="tipus_arrays">
+        <item>Tapa Dura</item>
+        <item>De butxaca</item>
+    </string-array>
+</resources>
