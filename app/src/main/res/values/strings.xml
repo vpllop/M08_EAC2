@@ -6,4 +6,5 @@
         <item>Tapa Dura</item>
         <item>De butxaca</item>
     </string-array>
+    <string name="title_activity_detall_llibre">Detalls Llibre</string>
 </resources>

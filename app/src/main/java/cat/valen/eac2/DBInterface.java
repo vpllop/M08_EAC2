@@ -54,7 +54,7 @@ public class DBInterface {
 
     //Insereix un contacte
 
-    public long insereixContacte(String titol, String autor, String editorial, String tapa,int preu)
+    public long insereixLlibre(String titol, String autor, String editorial, String tapa,int preu)
     {
         ContentValues initialValues = new ContentValues();
         initialValues.put(CLAU_TITOL, titol);
@@ -68,15 +68,16 @@ public class DBInterface {
 
     //Esborra un contacte
 
-    public boolean esborraContacte(String idTitol)
+    public boolean esborraLlibre(String idTitol)
     {
-        return bd.delete(BD_TAULA, CLAU_TITOL + " = " + idTitol, null) > 0;
+        return bd.delete(BD_TAULA, CLAU_TITOL + " = '" + idTitol + "'", null) > 0;
     }
 
     //Retorna un contacte
 
-    public Cursor obtenirContacte(String idTitol) throws SQLException {
-        Cursor mCursor = bd.query(true, BD_TAULA, new String[] {CLAU_TITOL, CLAU_AUTOR, CLAU_EDITORIAL}, CLAU_TITOL + " = " + idTitol, null, null, null, null, null);
+    public Cursor obtenirLlibre(String idTitol) throws SQLException {
+        Cursor mCursor = bd.query(true, BD_TAULA, new String[] {CLAU_TITOL, CLAU_AUTOR, CLAU_EDITORIAL,CLAU_TIPUS_TAPA,CLAU_PREU},
+                CLAU_TITOL + " like '" + idTitol + "%'", null, null, null, null, null);
 
         if(mCursor != null) {
             mCursor.moveToFirst();
@@ -88,17 +89,20 @@ public class DBInterface {
 
     //Retorna tots els contactes
 
-    public Cursor obtenirTotsElsContactes()
+    public Cursor obtenirTotsElsLlibres()
     {
-        return bd.query(BD_TAULA, new String[] {CLAU_TITOL, CLAU_AUTOR}, null, null, null, null, null);
+        return bd.query(BD_TAULA, new String[] {CLAU_TITOL, CLAU_AUTOR,CLAU_EDITORIAL,CLAU_TIPUS_TAPA,CLAU_PREU}, null, null, null, null, null);
     }
 
-    //Modifica un contacte
+    //Modifica un Llibre
 
-    /*public boolean actualitzarContacte(long IDFila, String nom, String email) {
+    public boolean actualitzarLlibre(String titol, String autor, String editorial,String tipus, int preu) {
         ContentValues args = new ContentValues();
-        args.put(CLAU_NOM, nom);
-        args.put(CLAU_EMAIL, email);
-        returnbd.update(BD_TAULA, args, CLAU_ID + " = " + IDFila, null) > 0;
-    }*/
+        args.put(CLAU_TITOL, titol);
+        args.put(CLAU_AUTOR, autor);
+        args.put(CLAU_EDITORIAL, editorial);
+        args.put(CLAU_TIPUS_TAPA, tipus);
+        args.put(CLAU_PREU, preu);
+        return bd.update(BD_TAULA, args, CLAU_TITOL + " = '" + titol + "'", null) > 0;
+    }
 }

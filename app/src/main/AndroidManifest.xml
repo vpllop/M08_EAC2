@@ -15,19 +15,27 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-       <activity
+        <activity
             android:name=".inserir_llibre"
             android:label="@string/app_inserir">
             <intent-filter>
                 <action android:name="android.intent.action.AFEGIR" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
+        <activity
+            android:name=".detall_llibre"
+            android:label="@string/title_activity_detall_llibre"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".modificar_llibre"
+            android:label="Modificar Llibre"></activity>
     </application>
 
 </manifest>

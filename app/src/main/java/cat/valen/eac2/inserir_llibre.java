@@ -20,7 +20,7 @@ public class inserir_llibre extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_inserir_llibre );
-
+        // Referenciem els botons i els widgets dels layouts
         btnInserir = (Button) findViewById(R.id.btnAfegirLlibre);
         btnInserir.setOnClickListener(this);
 
@@ -33,24 +33,36 @@ public class inserir_llibre extends AppCompatActivity implements View.OnClickLis
         EditTipus = (Spinner) findViewById(R.id.spinner);
         editPreu = (EditText) findViewById(R.id.editPreu);
     }
-
+    // Sobreescriu el metode onClick de la clase View.OnClickListener
     @Override
     public void onClick(View v) {
+        // Segons el boto seleccionat defineix una acció
         if(v == btnInserir)
         {
-            //Obrim la base dedades
-            bd = new DBInterface(this);
-            bd.obre();
+            String myTitol = editTitol.getText().toString();
+            String myAutor =  editAutor.getText().toString();
+            String myEditorial = editEditorial.getText().toString();
+            String myTipus = EditTipus.getSelectedItem().toString();
+            int myPreu = (editPreu.getText().length() > 0) ? Integer.parseInt(editPreu.getText().toString()) :0;
 
-            //Inserim el contacte.
-            if(bd.insereixContacte(editTitol.getText().toString(), editAutor.getText().toString(),
-                    editEditorial.getText().toString(),EditTipus.getSelectedItem().toString(),
-                    Integer.parseInt(editPreu.getText().toString()))  != -1)
-                Toast.makeText(this, "Afegit correctament", Toast.LENGTH_SHORT).show();
-            else
-                Toast.makeText(this, "Error a l'afegir", Toast.LENGTH_SHORT).show();
-            bd.tanca();
-            finish();
+            if (!myTitol.isEmpty() || !myAutor.isEmpty()) {
+                //Obrim la base dedades
+                bd = new DBInterface(this);
+                bd.obre();
+
+                //Inserim el contacte.
+                if(bd.insereixLlibre(editTitol.getText().toString(), editAutor.getText().toString(),
+                        editEditorial.getText().toString(),EditTipus.getSelectedItem().toString(),
+                        Integer.parseInt(editPreu.getText().toString()))  != -1)
+                    Toast.makeText(this, "Afegit correctament", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(this, "Error a l'afegir", Toast.LENGTH_SHORT).show();
+                bd.tanca();
+                finish();
+            } else {
+                Toast.makeText(this, "Tots els camps ha d'estar omplerts i el preu numeric", Toast.LENGTH_SHORT).show();
+            }
+
         }
 
         if(v == btnCancelar)
